@@ -4,7 +4,9 @@ import Button from '@/components/Button';
 import Input from '@/components/input/Input';
 import { authSchema } from '@/formiks/auth/schema';
 import { useLoginSocialAuth } from '@/hooks/auth/useLoginSocialAuth';
-import { Form, Formik } from 'formik';
+import { useRegisterCredential } from '@/hooks/auth/useRegisterCredential';
+import { AuthPayload } from '@/types/usertype';
+import { Form, Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -15,13 +17,38 @@ interface AuthFormProps {
 
 const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
   const { handleLoginSocialAuth } = useLoginSocialAuth();
+  const { mutateAsync: register, isPending: loadingRegister } =
+    useRegisterCredential();
+
+  const handleSubmit = async (
+    payload: AuthPayload,
+    actions: FormikHelpers<AuthPayload>
+  ) => {
+    if (variantAuth === 'LOGIN') {
+      try {
+        alert('LOGIN BANG');
+        actions.resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (variantAuth === 'REGISTER') {
+      try {
+        await register(payload);
+        actions.resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={authSchema}
-      onSubmit={(value) => {
-        alert(value);
+      onSubmit={async (values, actions) => {
+        handleSubmit(values, actions);
       }}
     >
       {({ errors }) => (
@@ -31,6 +58,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
             name="email"
             type="email"
             error={!!errors.email}
+            disabled={loadingRegister}
             placeholder="Enter Your Email"
           />
           <Input
@@ -38,9 +66,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
             name="password"
             type="password"
             error={!!errors.password}
+            disabled={loadingRegister}
             placeholder="Enter your password"
           />
-          <Button className="mt-5 text-sm" type="submit" secondary>
+          <Button
+            disabled={loadingRegister}
+            className="mt-5 text-sm"
+            type="submit"
+            secondary
+          >
             {variantAuth === 'LOGIN' ? "Lets Go'!" : 'Join Now!'}
           </Button>
           <div className="flex w-full items-center gap-x-3 text-neutral-400">
@@ -56,6 +90,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
               type="button"
               fullWidth
               outline
+              disabled={loadingRegister}
               onClick={() => handleLoginSocialAuth('google')}
             >
               <FcGoogle size={23} />
@@ -66,6 +101,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
               type="button"
               fullWidth
               outline
+              disabled={loadingRegister}
               onClick={() => handleLoginSocialAuth('github')}
             >
               <FaGithub size={23} />

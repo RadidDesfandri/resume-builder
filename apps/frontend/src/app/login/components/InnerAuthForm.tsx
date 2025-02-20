@@ -21,7 +21,7 @@ const InnerAuthForm = () => {
     <motion.div
       layout
       className={clsx(
-        'bg-primary flex min-h-[470px] w-full max-w-[870px] gap-5 rounded-lg p-3',
+        'bg-primary flex min-h-[530px] w-full max-w-[900px] justify-between gap-5 rounded-lg p-3 shadow-md',
         variantAuth === 'LOGIN' ? 'flex-row-reverse' : 'flex-row'
       )}
       transition={{ type: 'spring', stiffness: 200, damping: 10 }}

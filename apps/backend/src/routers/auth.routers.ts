@@ -14,5 +14,6 @@ export class AuthRoutes {
   private initializeRoutes() {
     // "/api/auth/social"
     this.router.post('/social', this.authController.socialLoginController);
+    this.router.post('/register', this.authController.registerUserController);
   }
 }

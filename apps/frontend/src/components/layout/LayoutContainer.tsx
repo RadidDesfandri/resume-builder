@@ -17,7 +17,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = ({
   return (
     <main
       className={clsx(
-        'bg-primary/50 mx-auto h-full w-full max-w-screen-2xl',
+        'bg-primary/90 mx-auto h-full w-full max-w-screen-2xl',
         padded && 'px-5 md:px-14 lg:px-16 xl:px-24',
         center && 'flex items-center justify-center',
         className
