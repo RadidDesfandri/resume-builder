@@ -13,7 +13,6 @@ export const useLoginSocialAuth = () => {
       async (event, session) => {
         if (event === 'SIGNED_IN' && session) {
           const user = session.user;
-          const provider = session.user?.app_metadata.provider;
           if (!isAuthenticated) {
             setIsAuthenticated(true);
             await axiosInstance.post(`/auth/social`, {
@@ -21,7 +20,7 @@ export const useLoginSocialAuth = () => {
               email: user.email,
               username: user.user_metadata.full_name,
               avatar: user.user_metadata.avatar_url,
-              provider,
+              provider: user.app_metadata.provider,
             });
 
             router.push('/');
@@ -38,7 +37,7 @@ export const useLoginSocialAuth = () => {
   const handleLoginSocialAuth = async (provider: 'google' | 'github') => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider,
+        provider,
         options: {
           redirectTo: process.env.NEXT_PUBLIC_BASE_WEB_URL + '/login',
         },
