@@ -12,7 +12,7 @@ export class AuthRoutes {
   }
 
   private initializeRoutes() {
-    this.router.get('/register', this.authController.register);
-    this.router.get('/login', this.authController.login);
+    // "/api/auth/social"
+    this.router.post('/social', this.authController.socialLoginController);
   }
 }
