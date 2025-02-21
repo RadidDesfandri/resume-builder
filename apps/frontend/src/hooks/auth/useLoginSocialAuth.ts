@@ -13,7 +13,6 @@ export const useLoginSocialAuth = () => {
       async (event, session) => {
         if (event === 'SIGNED_IN' && session) {
           const user = session.user;
-          console.log(user);
 
           if (!isAuthenticated) {
             setIsAuthenticated(true);
@@ -25,7 +24,7 @@ export const useLoginSocialAuth = () => {
               provider: user.app_metadata.provider,
             });
 
-            router.push('/');
+            router.push('/dashboard');
           }
         }
       }
