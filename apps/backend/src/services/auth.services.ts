@@ -2,6 +2,7 @@ import { User } from '@prisma/client';
 import prisma from '../prisma';
 import { supabase } from '../libs/supabase/supabaseClient';
 import { existingUser } from '../helpers/findUser';
+import { generateFromEmail } from 'unique-username-generator';
 
 export const socialLoginService = async (body: User) => {
   try {
@@ -48,11 +49,14 @@ export const registerUserService = async (body: BodyAuthUser) => {
     });
 
     if (error) throw { status: 400, msg: error.message };
+    
+    const generatedUsername = generateFromEmail(email);
 
     const newUser = await prisma.user.create({
       data: {
         id: data.user?.id!,
         email,
+        username: generatedUsername,
         provider: 'credential',
       },
     });

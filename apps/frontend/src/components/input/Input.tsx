@@ -50,11 +50,11 @@ const Input: React.FC<InputProps> = ({
           autoComplete={autoComplete}
           placeholder={placeholder}
           className={clsx(
-            `disabled:hover:ring-secondary bg-secondary/10 mb-1 w-full rounded-lg px-4 py-3 text-sm outline-none transition-all duration-300 placeholder:text-sm focus:ring-1 disabled:hover:placeholder:text-gray-500`,
+            `disabled:hover:ring-secondDarkBlue bg-secondDarkBlue/10 mb-1 w-full rounded-lg px-4 py-3 text-sm outline-none transition-all duration-300 placeholder:text-sm focus:ring-1 disabled:hover:placeholder:text-gray-500`,
             disabled && 'opacity-55',
             error
               ? 'ring-rose-500 ring-offset-rose-500'
-              : 'hover:ring-secondary focus:ring-secondary placeholder:text-gray-500 hover:placeholder:text-gray-400',
+              : 'hover:ring-secondDarkBlue focus:ring-secondDarkBlue placeholder:text-gray-500 hover:placeholder:text-gray-400',
             className
           )}
         >

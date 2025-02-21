@@ -37,12 +37,12 @@ const Button: React.FC<ButtonProps> = ({
         fullWidth && 'w-full',
         roundedFull ? 'rounded-full' : 'rounded-lg',
         disabled &&
-          'hover:bg-secondary/40 cursor-default opacity-50 hover:text-white/60',
+          'hover:bg-secondDarkBlue/40 cursor-default opacity-50 hover:text-white/60',
         secondary &&
-          'hover:bg-secondary/30 bg-secondary/40 transition-all duration-300 hover:text-white/60',
+          'hover:bg-secondDarkBlue/30 bg-secondDarkBlue/40 transition-all duration-300 hover:text-white/60',
         danger &&
           'bg-rose-500 text-white transition-all duration-300 hover:bg-rose-600',
-        outline && 'ring-secondary/40 ring-1 ring-inset',
+        outline && 'ring-secondDarkBlue/40 ring-1 ring-inset',
         className
       )}
     >

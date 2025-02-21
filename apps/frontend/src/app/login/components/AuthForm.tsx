@@ -3,6 +3,7 @@
 import Button from '@/components/Button';
 import Input from '@/components/input/Input';
 import { authSchema } from '@/formiks/auth/schema';
+import { useLoginCredential } from '@/hooks/auth/useLoginCredential';
 import { useLoginSocialAuth } from '@/hooks/auth/useLoginSocialAuth';
 import { useRegisterCredential } from '@/hooks/auth/useRegisterCredential';
 import { AuthPayload } from '@/types/usertype';
@@ -17,6 +18,7 @@ interface AuthFormProps {
 
 const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
   const { handleLoginSocialAuth } = useLoginSocialAuth();
+  const { handleLoginCredential: login, isLoading } = useLoginCredential();
   const { mutateAsync: register, isPending: loadingRegister } =
     useRegisterCredential();
 
@@ -25,14 +27,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
     actions: FormikHelpers<AuthPayload>
   ) => {
     if (variantAuth === 'LOGIN') {
-      try {
-        alert('LOGIN BANG');
-        actions.resetForm();
-      } catch (error) {
-        console.log(error);
-      }
+      login(payload, actions);
     }
-
     if (variantAuth === 'REGISTER') {
       try {
         await register(payload);
@@ -58,7 +54,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
             name="email"
             type="email"
             error={!!errors.email}
-            disabled={loadingRegister}
+            disabled={loadingRegister || isLoading}
             placeholder="Enter Your Email"
           />
           <Input
@@ -66,11 +62,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
             name="password"
             type="password"
             error={!!errors.password}
-            disabled={loadingRegister}
+            disabled={loadingRegister || isLoading}
             placeholder="Enter your password"
           />
           <Button
-            disabled={loadingRegister}
+            disabled={loadingRegister || isLoading}
             className="mt-5 text-sm"
             type="submit"
             secondary
@@ -90,7 +86,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
               type="button"
               fullWidth
               outline
-              disabled={loadingRegister}
+              disabled={loadingRegister || isLoading}
               onClick={() => handleLoginSocialAuth('google')}
             >
               <FcGoogle size={23} />
@@ -101,7 +97,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ variantAuth }) => {
               type="button"
               fullWidth
               outline
-              disabled={loadingRegister}
+              disabled={loadingRegister || isLoading}
               onClick={() => handleLoginSocialAuth('github')}
             >
               <FaGithub size={23} />

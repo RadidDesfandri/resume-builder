@@ -13,6 +13,8 @@ export const useLoginSocialAuth = () => {
       async (event, session) => {
         if (event === 'SIGNED_IN' && session) {
           const user = session.user;
+          console.log(user);
+
           if (!isAuthenticated) {
             setIsAuthenticated(true);
             await axiosInstance.post(`/auth/social`, {

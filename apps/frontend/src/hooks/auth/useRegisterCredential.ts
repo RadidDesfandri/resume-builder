@@ -2,7 +2,7 @@ import { axiosInstance } from '@/libs/axios';
 import { AuthPayload } from '@/types/usertype';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-
+import { toast } from 'sonner';
 
 export const useRegisterCredential = () => {
   return useMutation({
@@ -16,17 +16,17 @@ export const useRegisterCredential = () => {
     },
     onSuccess: (data) => {
       if (data.status == 'ok') {
-        alert(data.msg);
+        toast.success(data.msg);
       }
     },
     onError: (error) => {
       if (error instanceof AxiosError) {
-        alert(
+        toast.error(
           error.response?.data?.msg ||
             'Something went wrong, please try again later'
         );
       } else {
-        alert('An unknown error occurred, please try again later');
+        toast.error('An unknown error occurred, please try again later');
       }
     },
   });
