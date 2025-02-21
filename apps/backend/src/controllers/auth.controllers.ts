@@ -1,23 +1,34 @@
 import { NextFunction, Request, Response } from 'express';
-import { loginService, registerService } from '../services/auth.services';
+import {
+  registerUserService,
+  socialLoginService,
+} from '../services/auth.services';
 
 export class AuthController {
-  async register(req: Request, res: Response) {
+  async socialLoginController(req: Request, res: Response, next: NextFunction) {
     try {
-      const response = await registerService();
-      res.json(response);
+      await socialLoginService(req.body);
+      res.status(200).send({
+        msg: 'Success',
+      });
     } catch (error) {
-      console.error('ERROR_REGISTER:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      next(error);
     }
   }
 
-  async login(req: Request, res: Response, next: NextFunction) {
+  async registerUserController(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
-      const response = await loginService(req.body);
-      res.json(response);
+      const user = await registerUserService(req.body);
+      res.status(200).send({
+        status: 'ok',
+        msg: 'Create account success',
+        user,
+      });
     } catch (error) {
-      console.error('ERROR_LOGIN:', error);
       next(error);
     }
   }

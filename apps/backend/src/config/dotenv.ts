@@ -4,4 +4,5 @@ dotenv.config();
 
 export const config = {
   PORT: process.env.PORT || 8000,
+  SECRET_KEY: process.env.SECRET_KEY,
 };
