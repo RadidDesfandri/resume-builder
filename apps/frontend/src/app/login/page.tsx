@@ -3,7 +3,7 @@ import InnerAuthForm from './components/InnerAuthForm';
 
 const Login = () => {
   return (
-    <LayoutContainer center padded className="gap-5">
+    <LayoutContainer center padded="large" className="gap-5">
       <InnerAuthForm />
     </LayoutContainer>
   );
