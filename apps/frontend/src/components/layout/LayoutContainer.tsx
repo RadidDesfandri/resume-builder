@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 interface LayoutContainerProps {
   children: ReactNode;
   className?: string;
-  padded?: boolean;
+  padded?: 'small' | 'large';
   center?: boolean;
 }
 
@@ -18,7 +18,8 @@ const LayoutContainer: React.FC<LayoutContainerProps> = ({
     <main
       className={clsx(
         'bg-primary mx-auto h-full w-full max-w-screen-2xl',
-        padded && 'px-5 md:px-14 lg:px-16 xl:px-24',
+        padded == 'large' && 'px-5 md:px-14 lg:px-16 xl:px-24',
+        padded == 'small' && 'px-5 md:px-9',
         center && 'flex items-center justify-center',
         className
       )}
