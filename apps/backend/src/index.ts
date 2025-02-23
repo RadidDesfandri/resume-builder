@@ -2,6 +2,7 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config/dotenv';
 import { AuthRoutes } from './routers/auth.routers';
+import { ResumeRoutes } from './routers/resume/resume.routers';
 
 class Server {
   private app: Application;
@@ -40,12 +41,14 @@ class Server {
 
   private initializeRoutes() {
     const authRouter = new AuthRoutes();
+    const resumeRouter = new ResumeRoutes();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send('Selamat datang di-Backend Monorepo');
     });
 
     this.app.use('/api/auth', authRouter.router);
+    this.app.use('/api/resume', resumeRouter.router);
   }
 
   public listen() {
