@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 import AuthForm from './AuthForm';
 
@@ -12,10 +12,17 @@ type VariantAuth = 'LOGIN' | 'REGISTER';
 
 const InnerAuthForm = () => {
   const [variantAuth, setVariantAuth] = useState<VariantAuth>('LOGIN');
+  const [isClient, setIsClient] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleToggleVariantAuth = () => {
     setVariantAuth((prev) => (prev === 'LOGIN' ? 'REGISTER' : 'LOGIN'));
   };
+
+  if (!isClient) return null;
 
   return (
     <motion.div

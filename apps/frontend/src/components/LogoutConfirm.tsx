@@ -19,7 +19,6 @@ const LogoutConfirm: React.FC<LogoutConfirmProps> = ({ isOpen, onClose }) => {
         toast.error('Something went wrong');
       } else {
         toast.success('Logout success');
-        onClose();
         router.push('/login');
       }
     } catch (error) {

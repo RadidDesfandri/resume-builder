@@ -13,6 +13,7 @@ export default function DashboardLayout({
       <main className="w-full">
         <LayoutContainer padded="small" className="bg-white">
           <SidebarTrigger className="block md:hidden" />
+          <div>Header</div>
           {children}
         </LayoutContainer>
       </main>

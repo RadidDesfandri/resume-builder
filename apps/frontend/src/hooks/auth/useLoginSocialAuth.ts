@@ -24,7 +24,7 @@ export const useLoginSocialAuth = () => {
               provider: user.app_metadata.provider,
             });
 
-            router.push('/dashboard');
+            router.push('/');
           }
         }
       }

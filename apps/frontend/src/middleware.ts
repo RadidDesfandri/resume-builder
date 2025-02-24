@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   const guestOnlyRoutes = ['/login'];
-  const protectedRoutes = ['/dashboard'];
+  const protectedRoutes = ['/resume', '/cover-letter', '/account'];
 
   const isProtectedRoute = protectedRoutes.some((route) =>
     req.nextUrl.pathname.startsWith(route)
@@ -19,17 +19,22 @@ export async function middleware(req: NextRequest) {
 
   // **Jika user tidak login dan akses halaman terlarang → Redirect ke login**
   if (!session && isProtectedRoute) {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   // **Jika user sudah login dan akses halaman login → Redirect ke dashboard**
   if (session && isGuestOnlyRoute) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   return res;
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/login'],
+  matcher: [
+    '/resume/:path*',
+    '/cover-letter/:path*',
+    '/account/:path*',
+    '/login',
+  ],
 };
