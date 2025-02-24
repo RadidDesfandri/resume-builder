@@ -69,5 +69,5 @@ enum SectionType {
   EDUCATION
   SKILLS
   PROJECTS
-  SUMMARY
+  SUMMARY //hapus
 }

@@ -49,7 +49,7 @@ export const registerUserService = async (body: BodyAuthUser) => {
     });
 
     if (error) throw { status: 400, msg: error.message };
-    
+
     const generatedUsername = generateFromEmail(email);
 
     const newUser = await prisma.user.create({
@@ -62,6 +62,20 @@ export const registerUserService = async (body: BodyAuthUser) => {
     });
 
     return newUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getOwnUserService = async (email: string) => {
+  try {
+    const ownUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    return ownUser;
   } catch (error) {
     throw error;
   }

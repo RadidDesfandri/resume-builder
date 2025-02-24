@@ -28,7 +28,7 @@ export function AppSidebar() {
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarGroupLabel>General</SidebarGroupLabel>
-            {router.slice(0, 2).map((route) => (
+            {router.slice(0, 3).map((route) => (
               <SidebarMenuItem key={route.label}>
                 <SidebarMenuButton asChild isActive={route.active}>
                   <Link href={route.href}>
@@ -41,7 +41,7 @@ export function AppSidebar() {
           </SidebarMenu>
           <SidebarMenu>
             <SidebarGroupLabel>Personal</SidebarGroupLabel>
-            {router.slice(2, 4).map((route) => (
+            {router.slice(3, 5).map((route) => (
               <SidebarMenuItem key={route.label}>
                 <SidebarMenuButton
                   asChild
