@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { createResumeService } from '../../services/resume/resume.services';
+import {
+  createResumeService,
+  updateResumeService,
+} from '../../services/resume/resume.services';
 
 export class ResumeController {
   async createResumeController(
@@ -13,6 +16,26 @@ export class ResumeController {
       response,
     });
     try {
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateResumeController(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const response = await updateResumeService(
+        req.body,
+        req.params.resumeId,
+        req.user?.email!
+      );
+      res.status(200).send({
+        msg: 'Successfully',
+        response,
+      });
     } catch (error) {
       next(error);
     }

@@ -8,6 +8,14 @@ body,
   height: 100%;
 }
 
+.small-scrollbar {
+  scrollbar-width: thin;
+}
+
+.none-scrollbar {
+  scrollbar-width: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

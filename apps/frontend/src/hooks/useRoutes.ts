@@ -30,7 +30,7 @@ export const useRoutes = () => {
         label: 'Resumes',
         url: '/resume',
         icon: TbNotes,
-        active: pathname == '/resume',
+        active: pathname.startsWith('/resume'),
         onClick: toggleSidebar,
       },
       {
