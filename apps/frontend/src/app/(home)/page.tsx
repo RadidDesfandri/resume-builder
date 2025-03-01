@@ -1,4 +1,3 @@
-import LayoutContainer from '@/components/layout/LayoutContainer';
 import { getSessionServer } from '@/libs/supabase/getSessionServer';
 
 export default async function Home() {
@@ -11,10 +10,8 @@ export default async function Home() {
   console.log(session);
 
   return (
-    <LayoutContainer className="bg-white" padded="large">
-      <h1>
-        WELCOME {session?.user.user_metadata.name} {session?.user.email}
-      </h1>
-    </LayoutContainer>
+    <h1>
+      WELCOME {session?.user.user_metadata.name} {session?.user.email}
+    </h1>
   );
 }

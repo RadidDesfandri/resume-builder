@@ -19,5 +19,10 @@ export class ResumeRoutes {
       authenticate,
       this.resumeController.createResumeController
     );
+    this.router.patch(
+      '/update/:resumeId',
+      authenticate,
+      this.resumeController.updateResumeController
+    );
   }
 }

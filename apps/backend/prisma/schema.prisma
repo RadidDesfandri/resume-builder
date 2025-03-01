@@ -28,17 +28,24 @@ model User {
 
 model Resume {
   id        String @id @default(uuid())
-  userEmail String @unique
+  userEmail String
   user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 
   title      String
   summary    String?
+  status     ResumeStatus @default(DRAFT)
   sections   Section[]
-  template   Template? @relation(fields: [templateId], references: [id])
+  template   Template?    @relation(fields: [templateId], references: [id])
   templateId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum ResumeStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 model Section {
@@ -47,10 +54,12 @@ model Section {
   resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   type    SectionType
-  content String
+  content String      @db.LongText
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([resumeId, type])
 }
 
 model Template {
@@ -69,5 +78,4 @@ enum SectionType {
   EDUCATION
   SKILLS
   PROJECTS
-  SUMMARY //hapus
 }
