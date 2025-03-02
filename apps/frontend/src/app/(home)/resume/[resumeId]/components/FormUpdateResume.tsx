@@ -12,6 +12,7 @@ import { RiAiGenerateText, RiAiGenerate2 } from 'react-icons/ri';
 import LabelUpdateResume from './LabelUpdateResume';
 import { IoAdd } from 'react-icons/io5';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ExperienceValueType {
   company: string;
@@ -106,7 +107,10 @@ const FormUpdateResume: React.FC<FormUpdateResumeProps> = ({
       </div>
 
       <div>
-        <LabelUpdateResume>Choose a skill that you master</LabelUpdateResume>
+        <LabelUpdateResume>
+          Choose a skill that you master{' '}
+          <span className="text-xs">(optional)</span>
+        </LabelUpdateResume>
         <AutoCompleteInput
           suggestions={SKILLS_DATA}
           onSelect={(selected) => handleSelectSkill(selected)}
@@ -117,7 +121,10 @@ const FormUpdateResume: React.FC<FormUpdateResumeProps> = ({
       <div className="mt-3 space-y-2">
         <p className="font-semibold">Experience</p>
         <div>
-          <LabelUpdateResume>Choose a skill that you master</LabelUpdateResume>
+          <LabelUpdateResume>
+            Describe your work experience{' '}
+            <span className="text-xs">(optional)</span>
+          </LabelUpdateResume>
           <div className="grid grid-cols-2 gap-2">
             <Inputnon
               name="company"
@@ -163,8 +170,9 @@ const FormUpdateResume: React.FC<FormUpdateResumeProps> = ({
       <div className="mt-3 space-y-2">
         <p className="font-semibold">Education</p>
         <div>
-          <LabelUpdateResume required>
-            Choose a skill that you master
+          <LabelUpdateResume>
+            Add your educational background{' '}
+            <span className="text-xs">(optional)</span>
           </LabelUpdateResume>
           <div className="grid grid-cols-2 gap-2">
             <Inputnon
@@ -210,8 +218,12 @@ const FormUpdateResume: React.FC<FormUpdateResumeProps> = ({
       {/* project */}
       <div className="mt-3 space-y-2">
         <p className="font-semibold">Projects</p>
-        <div className="flex items-end justify-between">
-          <LabelUpdateResume>Choose a skill that you master</LabelUpdateResume>
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <LabelUpdateResume>
+              Showcase your projects <span className="text-xs">(optional)</span>
+            </LabelUpdateResume>
+          </div>
           <Button
             size="icon"
             onClick={handleAddProject}
@@ -221,54 +233,63 @@ const FormUpdateResume: React.FC<FormUpdateResumeProps> = ({
             Add project
           </Button>
         </div>
-        {projectValue.map((project, idx) => (
-          <div key={idx} className="mb-3 grid grid-cols-7 items-center gap-2">
-            <div className="col-span-2">
-              <Inputnon
-                name="title"
-                type="text"
-                variant="gost"
-                autoComplete="off"
-                placeholder="Title"
-                value={project.title}
-                onChange={(e) =>
-                  handleProjectChange(idx, 'title', e.target.value)
-                }
-              />
-            </div>
-            <div className="col-span-2 col-start-3">
-              <Inputnon
-                name="year"
-                type="number"
-                variant="gost"
-                autoComplete="off"
-                placeholder="Year (number)"
-                value={project.year}
-                onChange={(e) =>
-                  handleProjectChange(idx, 'year', e.target.value)
-                }
-              />
-            </div>
-            <div className="col-span-2 col-start-5">
-              <Inputnon
-                name="link"
-                type="text"
-                variant="gost"
-                autoComplete="off"
-                placeholder="Link"
-                value={project.link}
-                onChange={(e) =>
-                  handleProjectChange(idx, 'link', e.target.value)
-                }
-              />
-            </div>
-            <div className="col-start-7">
-              <Button onClick={() => handleRemoveProject(idx)} danger>
-                <AiOutlineDelete size={20} />
-              </Button>
-            </div>
-          </div>
-        ))}
+        <AnimatePresence>
+          {projectValue.map((project, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="mb-3 grid grid-cols-7 items-center gap-2"
+            >
+              <div className="col-span-2">
+                <Inputnon
+                  name="title"
+                  type="text"
+                  variant="gost"
+                  autoComplete="off"
+                  placeholder="Title"
+                  value={project.title}
+                  onChange={(e) =>
+                    handleProjectChange(idx, 'title', e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-span-2 col-start-3">
+                <Inputnon
+                  name="year"
+                  type="number"
+                  variant="gost"
+                  autoComplete="off"
+                  placeholder="Year (number)"
+                  value={project.year}
+                  onChange={(e) =>
+                    handleProjectChange(idx, 'year', e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-span-2 col-start-5">
+                <Inputnon
+                  name="link"
+                  type="text"
+                  variant="gost"
+                  autoComplete="off"
+                  placeholder="Link"
+                  value={project.link}
+                  onChange={(e) =>
+                    handleProjectChange(idx, 'link', e.target.value)
+                  }
+                />
+              </div>
+              <div className="col-start-7">
+                <Button onClick={() => handleRemoveProject(idx)} danger>
+                  <AiOutlineDelete size={20} />
+                </Button>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
       <div className="mt-5 flex justify-end">

@@ -4,6 +4,7 @@ import Button from '@/components/Button';
 import TipsBox from '@/components/TipsBox';
 import { useUpdateResume } from '@/hooks/resume/useUpdateResume';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import { useInput } from '@/hooks/useInput';
 import { useTips } from '@/hooks/useTips';
 import { useTextAreaValidation } from '@/hooks/validations/useTextAreaValidation';
 import { cn } from '@/libs/utils';
@@ -11,11 +12,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import { IoArrowBackOutline } from 'react-icons/io5';
+import { toast } from 'sonner';
 import ContentPreviewResume from './ContentPreviewResume';
 import FormUpdateResume, { ProjectValueType } from './FormUpdateResume';
 import TipsCreateResume from './TipsCreateResume';
-import { useInput } from '@/hooks/useInput';
-import { toast } from 'sonner';
 
 interface InnerUpdateResumeProps {
   titleParams: string;
@@ -28,6 +28,8 @@ const InnerUpdateResume: React.FC<InnerUpdateResumeProps> = ({
   const router = useRouter();
 
   const { mutate: updateResume } = useUpdateResume();
+  // const { revalidate } = useGetResumeById(id!);
+
   const { isActiveTips, onCloseTips } = useTips();
   const {
     error: errorSummary,
@@ -107,7 +109,7 @@ const InnerUpdateResume: React.FC<InnerUpdateResumeProps> = ({
         },
         {
           type: 'SKILLS',
-          content: skillsValue.join(', '),
+          content: JSON.stringify(skillsValue),
         },
         {
           type: 'PROJECTS',
@@ -117,6 +119,7 @@ const InnerUpdateResume: React.FC<InnerUpdateResumeProps> = ({
     };
 
     updateResume(payload);
+    // revalidate();
   };
 
   const [isClient, setIsClient] = useState<boolean>(false);
