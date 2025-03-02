@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import {
   createResumeService,
+  getResumeByIdService,
   updateResumeService,
 } from '../../services/resume/resume.services';
 
@@ -34,6 +35,22 @@ export class ResumeController {
       );
       res.status(200).send({
         msg: 'Successfully',
+        response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getResumeByIdController(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const response = await getResumeByIdService(req.params.resumeId);
+      res.status(200).send({
+        status: 'ok',
         response,
       });
     } catch (error) {

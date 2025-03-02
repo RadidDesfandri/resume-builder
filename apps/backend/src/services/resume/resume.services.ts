@@ -87,3 +87,35 @@ export const updateResumeService = async (
     throw error;
   }
 };
+
+export const getResumeByIdService = async (resumeId: string) => {
+  try {
+    const resume = await prisma.resume.findUnique({
+      where: {
+        id: resumeId,
+      },
+      include: {
+        sections: {
+          select: {
+            type: true,
+            content: true,
+          },
+        },
+      },
+    });
+
+    const parsedSections = resume?.sections.map((section) => ({
+      ...section,
+      content: section.content ? JSON.parse(section.content) : null,
+    }));
+
+    if (!resume) throw { status: 404, msg: 'Resume not found' };
+
+    return {
+      ...resume,
+      sections: parsedSections,
+    };
+  } catch (error) {
+    throw error;
+  }
+};

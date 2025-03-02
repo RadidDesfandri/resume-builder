@@ -13,7 +13,7 @@ export class ResumeRoutes {
   }
 
   private initializeRoutes() {
-    // "/api/resume/create"
+    // "/api/resume/*"
     this.router.post(
       '/create',
       authenticate,
@@ -23,6 +23,10 @@ export class ResumeRoutes {
       '/update/:resumeId',
       authenticate,
       this.resumeController.updateResumeController
+    );
+    this.router.get(
+      '/get-by-resumeid/:resumeId',
+      this.resumeController.getResumeByIdController
     );
   }
 }
